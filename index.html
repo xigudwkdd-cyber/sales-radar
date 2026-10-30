@@ -539,36 +539,63 @@
       color: #fff;
     }
 
-    /* 지도 버튼 (단일 핀) */
-    .btn-map-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 6px;
+    /* 지도 버튼 (단일 핀) - 균일한 50:50 분할 및 겹침 방지 */
+    .map-actions, .btn-map-row {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 8px !important;
+      margin-top: 10px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
-    .btn-app-map {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
+    .btn-app-map, .btn-map {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 42px !important;
+      padding: 0 8px !important;
+      border-radius: 10px !important;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: all 0.15s !important;
+      box-sizing: border-box !important;
+      text-decoration: none !important;
+      text-align: center !important;
+      white-space: nowrap !important;
     }
-    .btn-naver-app {
-      background: #03c75a;
-      color: #ffffff;
+    .btn-naver-app, .btn-naver {
+      background: #03c75a !important;
+      color: #ffffff !important;
     }
-    .btn-kakao-app {
-      background: #fee500;
-      color: #191919;
+    .btn-kakao-app, .btn-kakao {
+      background: #fee500 !important;
+      color: #191919 !important;
     }
-    .btn-app-map:active {
+    .btn-app-map:active, .btn-map:active {
       transform: scale(0.97);
+      opacity: 0.9;
+    }
+    .btn-job-link {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 42px !important;
+      width: 100% !important;
+      background: #be185d !important;
+      color: #ffffff !important;
+      border-radius: 10px !important;
+      font-size: 0.82rem !important;
+      font-weight: 800 !important;
+      text-decoration: none !important;
+      margin-top: 8px !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 3px 10px rgba(190, 24, 93, 0.35) !important;
+      letter-spacing: -0.3px !important;
+    }
+    .btn-job-link:active {
+      transform: scale(0.98);
       opacity: 0.9;
     }
 
@@ -1324,10 +1351,10 @@
 
             <div class="map-actions">
               <button class="btn-app-map btn-naver-app" onclick="openAppMap('naver', '${pin.replace(/'/g, "\\'")}')">
-                <span>네이버 지도 단일 핀 ↗</span>
+                <span>네이버 지도 ↗</span>
               </button>
               <button class="btn-app-map btn-kakao-app" onclick="openAppMap('kakao', '${pin.replace(/'/g, "\\'")}')">
-                <span>카카오 맵 단일 핀 ↗</span>
+                <span>카카오 맵 ↗</span>
               </button>
             </div>
           </div>
@@ -1503,48 +1530,67 @@
         return;
       }
 
-      container.innerHTML = filtered.map(item => `
-        <div class="card job-card">
-          <div class="card-header">
-            <div>
-              <div class="badge-row">
-                <span class="badge badge-hospital" style="background:#be185d; color:#fff;">${item.statusLabel}</span>
-                <span class="badge" style="background:rgba(56,189,248,0.2); color:#38bdf8;">${item.site}</span>
-                <span class="badge badge-pharmacy">${item.region}</span>
+      container.innerHTML = filtered.map(item => {
+        const badgeLabel = item.keyword || item.statusLabel || '개원선행';
+        const pinText = item.pinQuery || item.roadAddr || item.name;
+        const safePin = pinText.replace(/'/g, "\\'");
+        
+        return `
+        <div class="card job-card" style="margin-bottom:14px; border:1px solid #334155; background:#1e293b; border-radius:14px; padding:15px;">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+            <div style="flex:1;">
+              <div class="badge-row" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+                <span class="badge" style="background:#be185d; color:#fff; font-weight:700; padding:3px 8px; border-radius:6px; font-size:0.72rem;">${badgeLabel}</span>
+                <span class="badge" style="background:rgba(56,189,248,0.2); color:#38bdf8; font-weight:600; padding:3px 8px; border-radius:6px; font-size:0.72rem;">${item.site || '채용포털'}</span>
+                <span class="badge" style="background:rgba(16,185,129,0.2); color:#34d399; font-weight:600; padding:3px 8px; border-radius:6px; font-size:0.72rem;">${item.region}</span>
               </div>
-              <div class="card-title">${item.name}</div>
-              <div style="font-size:0.82rem; font-weight:700; color:#fb7185; margin-top:2px;">📋 ${item.role}</div>
+              <div class="card-title" style="font-size:1.05rem; font-weight:800; color:#f8fafc; margin-bottom:4px;">${item.name}</div>
+              <div style="font-size:0.83rem; font-weight:700; color:#fb7185; line-height:1.4;">📋 ${item.role}</div>
             </div>
-            <div class="card-date">${item.date}</div>
+            <div style="font-size:0.74rem; color:#94a3b8; font-weight:600; background:rgba(255,255,255,0.06); padding:3px 7px; border-radius:6px; white-space:nowrap; margin-left:8px;">
+              ${item.date}
+            </div>
           </div>
 
           <div class="card-body">
-            <div class="meta-row">
-              <span class="meta-label">📍 상세위치</span>
-              <span class="meta-value">${item.roadAddr}</span>
+            <div class="meta-row" style="margin-bottom:6px; font-size:0.8rem; color:#cbd5e1;">
+              <span class="meta-label" style="color:#94a3b8; margin-right:6px;">📍 상세위치</span>
+              <span class="meta-value" style="font-weight:600; color:#e2e8f0;">${item.roadAddr}</span>
             </div>
-            <div class="meta-row">
-              <span class="meta-label">🏢 건물유형</span>
+            ${item.buildingType ? `
+            <div class="meta-row" style="margin-bottom:6px; font-size:0.8rem; color:#cbd5e1;">
+              <span class="meta-label" style="color:#94a3b8; margin-right:6px;">🏢 건물유형</span>
               <span class="meta-value">${item.buildingType}</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-label">🏪 입점현황</span>
+            </div>` : ''}
+            ${item.sameBuilding ? `
+            <div class="meta-row" style="margin-bottom:6px; font-size:0.8rem; color:#cbd5e1;">
+              <span class="meta-label" style="color:#94a3b8; margin-right:6px;">🏪 입점현황</span>
               <span class="meta-value" style="color:#fde047; font-weight:600;">${item.sameBuilding}</span>
+            </div>` : ''}
+
+            <div class="sales-tip-box" style="border:1px solid rgba(244,63,94,0.35); background:rgba(244,63,94,0.08); border-radius:10px; padding:11px; margin:10px 0;">
+              <div class="sales-tip-title" style="color:#fb7185; font-size:0.78rem; font-weight:700; margin-bottom:4px;">🎯 도매영업 골든타임 공략 포인트</div>
+              <div class="sales-tip-content" style="color:#fecdd3; font-size:0.82rem; line-height:1.45;">${item.tip}</div>
             </div>
 
-            <div class="sales-tip-box" style="border-color:rgba(244,63,94,0.4); background:rgba(244,63,94,0.08);">
-              <div class="sales-tip-title" style="color:#fb7185;">🎯 도매영업 골든타임 공략 포인트</div>
-              <div class="sales-tip-content">${item.tip}</div>
-            </div>
-
+            <!-- 네이버/카카오맵 50:50 균일 배치 -->
             <div class="map-actions">
-              <a href="nmap://search?query=${encodeURIComponent(item.pinQuery)}" class="btn-map btn-naver" onclick="return openVerifiedUrl(this.href, 'https://map.naver.com/v5/search/' + encodeURIComponent('${item.pinQuery}'))">네이버 지도 (단일핀)</a>
-              <a href="kakaomap://search?q=${encodeURIComponent(item.pinQuery)}" class="btn-map btn-kakao" onclick="return openVerifiedUrl(this.href, 'https://map.kakao.com/link/search/' + encodeURIComponent('${item.pinQuery}'))">카카오맵 (단일핀)</a>
-              <a href="${item.link}" target="_blank" class="btn-map" style="background:#be185d; color:#fff;">채용공고 원문 ↗</a>
+              <button class="btn-app-map btn-naver-app" onclick="openAppMap('naver', '${safePin}')">
+                <span>네이버 지도 ↗</span>
+              </button>
+              <button class="btn-app-map btn-kakao-app" onclick="openAppMap('kakao', '${safePin}')">
+                <span>카카오 맵 ↗</span>
+              </button>
             </div>
+            
+            <!-- 채용공고 원문 풀사이즈 버튼 -->
+            <a href="${item.link}" target="_blank" class="btn-job-link">
+              <span>📄 채용공고 원문 바로가기 ↗</span>
+            </a>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function renderQuickRegionScroll() {
