@@ -1007,28 +1007,32 @@
     const jobPostingsData = [];
 
     // 3. 의약품 품절 데이터
-    const shortagesData = [
+        const shortagesData = [
       {
         id: 101,
         name: "슈도에페드린 60mg 단일제 (슈다페드정 등)",
         category: "resp",
         categoryLabel: "호흡기용제",
-        tagClass: "shortage-red",
-        badge: "🔥 바로팜 입고알림 1위 / 전국 품절",
+        tagClass: "shortage-amber",
+        badge: "⚠️ 식약처 수급불안정 지속 관리 대상",
+        reportedDate: "2026-10-12 (정부 합동 수급점검)",
+        source: "식품의약품안전처 / 보건복지부 민관협의체",
         spec: "Pseudoephedrine HCl 60mg | 삼일제약 외",
-        status: "호흡기 감염 폭증으로 원료 부족 심화. 타 도매상 쿼터 0건으로 약국 조제 마비 상태.",
-        hook: "💡 도매 영업 훅(Hook): '타 도매상엔 없어도 저희는 당사 거래 약국용으로 슈다페드 확보분이 있습니다. 신규 거래 개설 시 월 5병 고정 우선 배정해 드립니다!' 카드로 신규 약국 개척."
+        status: "환절기 코감기·비염 처방 증가로 약국별 수급 문의 다발. 단, 도매상별로 확보 물량 및 쿼터 편차가 크므로 [반드시 방문 전 당사 ERP 실시간 재고 확인 필수]!",
+        hook: "💡 도매 영업 팁: '원장님·약사님, 당사 슈도에페드린 잔여 쿼터 확인하고 왔습니다. 이번 주 코감기 처방 대비해 안정적으로 공급해 드리겠습니다' 선제 제안."
       },
       {
         id: 102,
         name: "수산화마그네슘 500mg (마그밀정 등)",
         category: "gastro",
         categoryLabel: "소화·완하제",
-        tagClass: "shortage-amber",
-        badge: "⚠️ 식약처 공급부족 공시 / 도매 쿼터제",
+        tagClass: "shortage-red",
+        badge: "🚨 식약처 공급부족 공식 보고",
+        reportedDate: "2025-10-13 (식약처 의약품안전나라 공시)",
+        source: "식품의약품안전처 의약품안전나라 (보고번호 MFDS-2025-SUP)",
         spec: "Magnesium Hydroxide 500mg | 삼남제약",
-        status: "장기 품귀 지속으로 로컬 약국 처방 조제 차질 발생.",
-        hook: "💡 도매 영업 훅(Hook): 마그오캡슐 등 동일 성분 단일제 도매 재고 묶음 사입 프로모션. '처방 중단 없이 조제 가능한 대체품 재고 확보해 두시라'며 사입 유도."
+        status: "제약사 생산 원가 및 원료 수급 지연에 따른 공급부족 공시 이력. 내과·가정의학과 처방 약국 중심 만성적 수급 부족 체감.",
+        hook: "💡 도매 영업 팁: 마그밀 조제용 덕용 포장 수급 애로 시, 동일 성분 마그오 등 대체 단일제 재고를 패키지로 묶어 처방 단절 없는 조제 지원 약속."
       },
       {
         id: 103,
@@ -1036,10 +1040,12 @@
         category: "anti",
         categoryLabel: "항생제",
         tagClass: "shortage-purple",
-        badge: "📢 원료 수급난 / 재고 급감",
+        badge: "📢 해외 원료 수급 지연 공시",
+        reportedDate: "2025-10-13 (식약처 공급부족 통계)",
+        source: "식품의약품안전처 공급중단·부족 의약품 현황",
         spec: "Cefaclor Hydrate 250mg | 2세대 세파계",
-        status: "해외 원료 공급 지연으로 병·의원 처방 대비 약국 재고 소진.",
-        hook: "💡 도매 영업 훅(Hook): 동일 효능 세프라딘, 세포독심 등 경구 세파 즉시 출하 가능 재고 보유 강조. 병의원 처방 변경 시 바로 조제할 수 있도록 약국에 사전 사입 제안."
+        status: "해외 원료의약품 합성 공급처 지연으로 인한 공급부족 보고 품목.",
+        hook: "💡 도매 영업 팁: 동일 2세대 세파계 및 경구용 대체 항생제 당사 보유 로트 즉시 출하 가능 안내로 처방과 문전약국 안심 유도."
       },
       {
         id: 104,
@@ -1047,10 +1053,12 @@
         category: "neuro",
         categoryLabel: "중추신경계",
         tagClass: "shortage-red",
-        badge: "🚨 심평원 수급불안정 / 고용량 품절",
+        badge: "🚨 심평원 수급불안정 모니터링",
+        reportedDate: "2026-01-19 (심평원 모니터링 공시)",
+        source: "건강보험심사평가원 수급불안정 의약품 목록",
         spec: "Methylphenidate HCl 서방형 (27mg, 36mg, 54mg)",
-        status: "ADHD 수요 폭증으로 고용량 장기 품귀.",
-        hook: "💡 도매 영업 훅(Hook): 문전약국 방문 시 '당사 확보된 18mg 저용량 복수 조제 물량' 공급 가능 안내 및 비자극제 아토목세틴 재고 확보로 약국장 신뢰 선점."
+        status: "청소년·성인 ADHD 처방 증가로 고용량 중심 공급 타이트 현상 보고.",
+        hook: "💡 도매 영업 팁: 정신건강의학과 문전약국에 당사 확보된 저용량(18mg) 분할 조제 및 비자극제 아토목세틴 라인업 동시 제안."
       },
       {
         id: 105,
@@ -1058,10 +1066,12 @@
         category: "gastro",
         categoryLabel: "관절염/골격계",
         tagClass: "shortage-amber",
-        badge: "⚠️ 약국 조제용 300C 병포장 품절",
+        badge: "⚠️ 원료 수입 지연 보고",
+        reportedDate: "2025-10-22 (식약처 안전나라 보고)",
+        source: "식품의약품안전처 의약품통합정보시스템",
         spec: "Avocado Soya Unsaponifiables 300mg",
-        status: "프랑스 원료 수입 차질로 300캡슐 덕용 포장 유통 중단.",
-        hook: "💡 도매 영업 훅(Hook): 정형외과 문전약국에 천연물 골관절염약(조인스, 레일라) 및 콘드로이틴 복합 제제 도매 재고 프로모션과 함께 PTP 소포장 물량 긴급 공급 제안."
+        status: "프랑스 원료 수입 일정 차질로 인한 병포장 공급 부족 보고 이력.",
+        hook: "💡 도매 영업 팁: 정형외과 문전약국에 조인스/레일라 등 천연물 골관절염 대체제 및 소포장 PTP 보유분 신속 배정 제안."
       }
     ];
 
@@ -1329,7 +1339,128 @@
       ` : '');
     }
 
-    const realJobsData = [];
+        const realJobsData = [
+      {
+        id: "job_01",
+        type: "hospital",
+        site: "잡코리아",
+        siteKey: "jobkorea",
+        name: "연세본튼튼의원",
+        region: "경기 파주시",
+        keyword: "개원예정",
+        date: "2026-10-19",
+        role: "26년 12월 말 개원예정 금릉역 (주 5일) 원무·접수팀 채용",
+        roadAddr: "경기 파주시 금릉역 인근 (금릉동)",
+        tip: "12월 말 신규 개원 예정! 원내 수액·주사제 직납 단가 사전 제안 및 1층 문전약국 입점 컨설팅 골든타임.",
+        link: "https://www.jobkorea.co.kr/Search?stext=%EA%B0%9C%EC%9B%90%EC%98%88%EC%A0%95%EB%B3%91%EC%9B%90",
+        status: "prelicense"
+      },
+      {
+        id: "job_02",
+        type: "hospital",
+        site: "잡코리아",
+        siteKey: "jobkorea",
+        name: "오블리브의원 서울오리진점",
+        region: "서울 종로구",
+        keyword: "신규오픈",
+        date: "2026-08-31",
+        role: "[신규 오픈 / 종로] 오블리브 오리진 간호조무사 채용",
+        roadAddr: "서울 종로구 청계천로 93 (관철동, 파고다타워) 지층~5층",
+        tip: "종로 관철동 신규 대형 오픈! 원내 피부·레이저 의약품 및 시술용 소모품 공급 상담.",
+        link: "https://www.jobkorea.co.kr/Recruit/GI_Read/49888015",
+        status: "prelicense"
+      },
+      {
+        id: "job_03",
+        type: "hospital",
+        site: "잡코리아",
+        siteKey: "jobkorea",
+        name: "오가나셀피부과의원 명동점",
+        region: "서울 중구",
+        keyword: "신규오픈",
+        date: "2026-08-12",
+        role: "[명동점 오픈] 피부과 총괄실장·원무코디 채용",
+        roadAddr: "서울 중구 을지로 30 (소공동, 롯데호텔) 9층",
+        tip: "명동 롯데호텔 대형 오픈! 외국인 환자 타깃 고가 피부 에스테틱 원내 주사제 직납 훅.",
+        link: "https://www.jobkorea.co.kr/Recruit/GI_Read/49780301",
+        status: "prelicense"
+      },
+      {
+        id: "job_04",
+        type: "pharmacy",
+        site: "잡코리아",
+        siteKey: "jobkorea",
+        name: "트리니티성수약국",
+        region: "서울 성동구",
+        keyword: "개업예정",
+        date: "2026-06-10",
+        role: "트리니티성수약국(이전 개업 예정) 중국어 가능 판매·조제직원 채용",
+        roadAddr: "서울 성동구 연무장길 13 (성수동2가) 1층",
+        tip: "성수동 핫플레이스 신규 이전 개업! 초도 사입 독점 수주 및 인근 피부과 처방약 공급 라인 선점.",
+        link: "https://www.jobkorea.co.kr/Recruit/GI_Read/49347392",
+        status: "prelicense"
+      },
+      {
+        id: "job_05",
+        type: "hospital",
+        site: "잡코리아",
+        siteKey: "jobkorea",
+        name: "골든타임365정형외과의원",
+        region: "경기 파주시",
+        keyword: "신규개원",
+        date: "2026-01-11",
+        role: "(신규개원) 골든타임365정형외과 외래 간호조무사 채용",
+        roadAddr: "경기 파주시 와석순환로 135 (동패동, 신한프라자) 3층",
+        tip: "파주 운정 365 정형외과 신규 개원! 소염진통제·근이완제 원내 주사제 직납 및 문전약국 처방전 연계.",
+        link: "https://www.jobkorea.co.kr/Recruit/GI_Read/48388969",
+        status: "prelicense"
+      },
+      {
+        id: "job_06",
+        type: "hospital",
+        site: "사람인",
+        siteKey: "saramin",
+        name: "잠실올본365의원",
+        region: "서울 송파구",
+        keyword: "개원예정",
+        date: "2026-10-19",
+        role: "[12월 개원예정/잠실] 외래 간호사(RN)·물리치료사 모집",
+        roadAddr: "서울 송파구 잠실동 인근",
+        tip: "12월 개원 예정 365 야간 진료 의원! 원내 수액·응급 의약품 대량 직납 선점 타깃.",
+        link: "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit/csn/aXh0RHpBbWdGNVhGYm5oRmUycmQ2UT09/company_nm/%EC%9E%A0%EC%8B%A4%EC%98%AC%EB%B3%B8365%EC%9D%98%EC%9B%90",
+        status: "prelicense"
+      },
+      {
+        id: "job_07",
+        type: "hospital",
+        site: "사람인",
+        siteKey: "saramin",
+        name: "메이퓨어의원 사당점",
+        region: "서울 동작구",
+        keyword: "오픈예정",
+        date: "2026-07-01",
+        role: "[사당역점 오픈 예정] 피부과 네트워크 간호조무사·코디 채용",
+        roadAddr: "서울 동작구 / 서초구 방배천로 (사당역)",
+        tip: "사당역 교통 요충지 신규 개원! 네트워크 피부과 납품 견적 및 문전약국 연계.",
+        link: "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=54333679",
+        status: "prelicense"
+      },
+      {
+        id: "job_08",
+        type: "hospital",
+        site: "사람인",
+        siteKey: "saramin",
+        name: "메이퓨어의원 망우점",
+        region: "서울 중랑구",
+        keyword: "오픈예정",
+        date: "2025-12-31",
+        role: "[망우점 오픈 예정] 피부과 간호조무사·코디 채용",
+        roadAddr: "서울 중랑구 망우로 인근",
+        tip: "중랑구 망우역 상권 신규 진입! 원내 필수의약품 직납 제안 타깃.",
+        link: "https://m.saramin.co.kr/job-search/view?rec_idx=52697003",
+        status: "prelicense"
+      }
+    ];
 
     function renderJobs() {
       const container = document.getElementById('job-list');
@@ -1539,12 +1670,18 @@
 
       container.innerHTML = filtered.map(item => `
         <div class="radar-card">
-          <span class="shortage-badge ${item.tagClass}">${item.badge}</span>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+            <span class="shortage-badge ${item.tagClass}">${item.badge}</span>
+            <span style="font-size:0.74rem; color:#38bdf8; font-weight:700; background:rgba(56,189,248,0.12); padding:3px 8px; border-radius:6px; border:1px solid rgba(56,189,248,0.3);">
+              📅 공시·조사: ${item.reportedDate}
+            </span>
+          </div>
+          <div style="font-size:0.72rem; color:#94a3b8; margin-bottom:6px;">🏛️ 공시 출처: <strong>${item.source}</strong></div>
           <div class="card-title" style="margin-top:4px;">${item.name}</div>
-          <div style="font-size:0.78rem; color:#94a3b8; margin-bottom:8px;">${item.spec}</div>
+          <div style="font-size:0.78rem; color:#cbd5e1; margin-bottom:8px;">${item.spec}</div>
           
-          <div style="font-size:0.82rem; color:#cbd5e1; margin-bottom:10px; line-height:1.45; background:rgba(0,0,0,0.3); padding:9px 11px; border-radius:8px;">
-            <strong style="color:#f87171;">수급 현황:</strong> ${item.status}
+          <div style="font-size:0.82rem; color:#cbd5e1; margin-bottom:10px; line-height:1.45; background:rgba(0,0,0,0.3); padding:9px 11px; border-radius:8px; border-left:3px solid #f87171;">
+            <strong style="color:#f87171;">공식 수급 현황:</strong> ${item.status}
           </div>
 
           <div class="hook-box">
