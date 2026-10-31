@@ -1182,20 +1182,44 @@
       }
     }
 
-    // 지도 어플 연동
+    // 지도 어플 연동 (안드로이드/iOS 네이티브 앱 직결 및 PC 폴백)
     function openAppMap(type, queryPOI) {
       const query = encodeURIComponent(queryPOI);
-      const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
       if (type === 'naver') {
-        const url = isMobile 
-          ? `https://m.map.naver.com/search2/search.naver?query=${query}`
-          : `https://map.naver.com/p/search/${query}`;
-        window.open(url, '_blank');
+        const webUrl = `https://m.map.naver.com/search2/search.naver?query=${query}`;
+        if (isAndroid) {
+          // 안드로이드: 네이버지도 전용 Intent 호출 (미설치 시 웹 폴백)
+          const intentUrl = `intent://search?query=${query}&appname=sales-radar#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
+          window.location.href = intentUrl;
+        } else if (isIOS) {
+          // iOS: nmap URL Scheme 호출 후 타이머 폴백
+          window.location.href = `nmap://search?query=${query}&appname=sales-radar`;
+          setTimeout(() => {
+            window.location.href = webUrl;
+          }, 1500);
+        } else {
+          // PC 데스크톱: 새 창으로 웹 지도
+          window.open(`https://map.naver.com/p/search/${query}`, '_blank');
+        }
       } else if (type === 'kakao') {
-        const url = isMobile 
-          ? `https://m.map.kakao.com/actions/searchView?q=${query}`
-          : `https://map.kakao.com/link/search/${query}`;
-        window.open(url, '_blank');
+        const kakaoWebUrl = `https://m.map.kakao.com/actions/searchView?q=${query}`;
+        if (isAndroid) {
+          // 안드로이드: 카카오맵 전용 Intent 호출 (미설치 시 웹 폴백)
+          const intentUrl = `intent://search?q=${query}#Intent;scheme=kakaomap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=net.daum.android.map;S.browser_fallback_url=${encodeURIComponent(kakaoWebUrl)};end`;
+          window.location.href = intentUrl;
+        } else if (isIOS) {
+          // iOS: kakaomap URL Scheme 호출 후 타이머 폴백
+          window.location.href = `kakaomap://search?q=${query}`;
+          setTimeout(() => {
+            window.location.href = kakaoWebUrl;
+          }, 1500);
+        } else {
+          // PC 데스크톱: 새 창으로 웹 지도
+          window.open(`https://map.kakao.com/link/search/${query}`, '_blank');
+        }
       }
     }
 
