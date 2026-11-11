@@ -862,7 +862,7 @@
     <div class="filter-scroll">
       <button class="chip active" onclick="setOpeningFilter('all', this)">전체보기</button>
       <button class="chip" onclick="setOpeningFilter('converted', this)">🔄 인허가 전환 완료 (포착 ➡️ 허가)</button>
-      <button class="chip" onclick="setOpeningFilter('prereg', this)">🚨 지도사전등록 (골든타임)</button>
+      <button class="chip" onclick="setOpeningFilter('prereg', this)">🚨 인허가 전 (지도 선등록)</button>
       <button class="chip" onclick="setOpeningFilter('licensed', this)">✅ 인허가 완료</button>
       <button class="chip" onclick="setOpeningFilter('pharmacy', this)">💊 약국만</button>
       <button class="chip" onclick="setOpeningFilter('hospital', this)">🏢 병·의원만</button>
@@ -949,6 +949,7 @@
       <button class="chip" onclick="setJobFilter('prelicense', this)">🚨 인허가 전 선행포착</button>
       <button class="chip" onclick="setJobFilter('pharmacy', this)">💊 약국 구인 (약사/조제/전산)</button>
       <button class="chip" onclick="setJobFilter('hospital', this)">🏥 병·의원 구인 (간호/원무)</button>
+      <button class="chip" onclick="setJobFilter('medijob', this)">🩺 메디잡 검증공고</button>
       <button class="chip" onclick="setJobFilter('jobkorea', this)">👔 잡코리아 검증공고</button>
       <button class="chip" onclick="setJobFilter('saramin', this)">💼 사람인 검증공고</button>
     </div>
@@ -1485,8 +1486,8 @@
         let filterTitle = '선택하신 조건에 해당하는 인허가 내역이 없습니다';
         let filterSub = '기간 필터나 상단 구역 설정을 변경해 보세요.';
         if (currentOpeningFilter === 'prereg') {
-          filterTitle = '🚨 선택하신 조건 내 지도 사전등록(골든타임) 건이 없습니다';
-          filterSub = '조회 기간을 "2026년 전체" 또는 "전체 기간"으로 넓혀보세요.';
+          filterTitle = '🚨 선택하신 조건 내 인허가 전 지도 선등록 건이 없습니다';
+          filterSub = '로컬데이터(지방행정인허가) 공시 전 네이버·카카오 지도에 먼저 등록된 건이 여기에 표시됩니다.';
         } else if (currentOpeningFilter === 'converted') {
           filterTitle = '🔄 선택하신 조건 내 인허가 전환 완료(사전등록 ➡️ 허가) 건이 없습니다';
           filterSub = '사전등록 상태에서 정식 인허가 승인으로 바뀐 추적 건이 여기에 표시됩니다.';
@@ -1512,6 +1513,10 @@
         if (cleanJibun.includes('동 -') || cleanJibun === '동 -' || cleanJibun === cleanRoad || cleanJibun.length < 3) {
           cleanJibun = '';
         }
+        const isPrereg = item.status === 'prereg';
+        const isConverted = item.status === 'converted' || item.statusChanged;
+        const sourceLabel = isPrereg ? (item.source === 'kakaomap' ? '📍 카카오맵 실시간 선등록 (로컬데이터 미등재)' : '📍 네이버지도 실시간 선등록 (로컬데이터 미등재)') : '🏛️ 행정안전부 공공데이터포털 (지방행정인허가 실데이터)';
+        const dateLabel = isPrereg ? `선등록 포착일자: ${item.date}` : `인허가일자: ${item.date}`;
         const telText = item.tel ? ` · 📞 ${item.tel}` : '';
         const pin = item.pinQuery || cleanRoad.split(',')[0].trim() || item.name;
 
@@ -1520,21 +1525,21 @@
             <div class="card-top">
               <div class="card-tags">
                 <span class="tag ${isHospital ? 'tag-hospital' : 'tag-pharmacy'}">${typeLabel}</span>
-                ${item.status === 'prereg' ? '<span class="tag" style="background:#e11d48; color:#fff; font-weight:700;">🚨 지도 사전등록 (개설예정)</span>' : (item.status === 'converted' || item.statusChanged ? '<span class="tag" style="background:#0284c7; color:#fff; font-weight:700;">🔄 인허가 전환 완료</span>' : '<span class="tag tag-licensed">인허가 완료</span>')}
+                ${isPrereg ? '<span class="tag" style="background:#e11d48; color:#fff; font-weight:700;">🚨 인허가 전 (지도 선등록)</span>' : (isConverted ? '<span class="tag" style="background:#0284c7; color:#fff; font-weight:700;">🔄 인허가 전환 완료</span>' : '<span class="tag tag-licensed">인허가 완료</span>')}
                 <span class="tag" style="background:#1e293b; color:#38bdf8;">${item.region}</span>
               </div>
               <span class="card-date">${getDateBadge(item.date)}</span>
             </div>
 
             <div>
-              <span class="source-badge source-gov">
-                🏛️ 행정안전부 공공데이터포털 (지방행정인허가 실데이터)
+              <span class="source-badge ${isPrereg ? 'source-map' : 'source-gov'}">
+                ${sourceLabel}
               </span>
             </div>
 
             <div class="card-title">${item.name}</div>
             <div class="card-spec" style="color:#94a3b8; font-size:0.82rem; margin-bottom:8px;">
-              인허가일자: ${item.date}${telText}
+              ${dateLabel}${telText}
             </div>
 
             <div class="addr-box">
@@ -1568,6 +1573,70 @@
 
             const realJobsData = [
   {
+    "id": "medijob_3772569",
+    "type": "hospital",
+    "site": "메디잡",
+    "siteKey": "medijob",
+    "name": "바른숨이비인후과의원",
+    "region": "서울 중구",
+    "keyword": "개원",
+    "date": "2026-11-12",
+    "role": "시청역 11번 출구에 개원한 바른숨이비인후과에서 신.규. 간호조무사 선생님을 모십니다!",
+    "roadAddr": "서울 중구 시청역 11번 출구 일대",
+    "pinQuery": "서울 중구 시청역 바른숨이비인후과",
+    "statusLabel": "개원 전 선행포착",
+    "link": "https://www.medijob.cc/com/cpn/com_cpn_100_view_02?recruitSeqno=3772569",
+    "tip": "시청역 11번 출구 신규 이비인후과 개원! 원내 다빈도 항생제·진해거담제·스테로이드 외래 처방코드 선점 및 네블라이저 소모품/원내수액 직납 견적 선제 제안."
+  },
+  {
+    "id": "medijob_3770702",
+    "type": "hospital",
+    "site": "메디잡",
+    "siteKey": "medijob",
+    "name": "성수리더스정형외과의원",
+    "region": "서울 성동구",
+    "keyword": "오픈예정",
+    "date": "2026-11-04",
+    "role": "★12월 초 오픈 예정) 성수리더스정형외과에서 물리치료사 선생님 구인합니다~!",
+    "roadAddr": "서울 성동구 아차산로 113",
+    "pinQuery": "서울 성동구 아차산로 113",
+    "statusLabel": "12월 개원예정",
+    "link": "https://www.medijob.cc/com/cpn/com_cpn_100_view_02?recruitSeqno=3770702",
+    "tip": "성수 IT밸리 직장인 타깃 12월 초 오픈 대형 정형외과! C-arm 콘쥬란/히알루론산 관절강 주사제 및 도수·물리치료 소모품 원내 직납 독점 제안."
+  },
+  {
+    "id": "s_55538746",
+    "type": "hospital",
+    "site": "사람인",
+    "siteKey": "saramin",
+    "name": "뷰티스톤의원",
+    "region": "서울 중구",
+    "keyword": "오픈예정",
+    "date": "2026-11-10",
+    "role": "STON CLINIC 명동 일본어 코디네이터 [12월 오픈]",
+    "roadAddr": "서울 중구 (뷰티스톤의원)",
+    "pinQuery": "서울 중구 뷰티스톤의원",
+    "statusLabel": "12월 개원예정",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55538746",
+    "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+  },
+  {
+    "id": "s_55523259",
+    "type": "hospital",
+    "site": "사람인",
+    "siteKey": "saramin",
+    "name": "더미아의원",
+    "region": "서울 중구",
+    "keyword": "오픈예정",
+    "date": "2026-11-09",
+    "role": "[명동 11월오픈] 더미아의원 몽골 코디네이터 모십니다",
+    "roadAddr": "서울 중구 (더미아의원)",
+    "pinQuery": "서울 중구 더미아의원",
+    "statusLabel": "11월 개원예정",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55523259",
+    "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+  },
+  {
     "id": "s_55500307",
     "type": "pharmacy",
     "site": "사람인",
@@ -1579,9 +1648,9 @@
     "role": "[성수/오픈멤버] 뷰티온누리약국 외국어 고객응대 직원 모집합니",
     "roadAddr": "서울 성동구 (뷰티온누리약국무신사뷰티성수점)",
     "pinQuery": "서울 성동구 뷰티온누리약국무신사뷰티성수점",
-    "statusLabel": "개국 준비(선행)",
+    "statusLabel": "개국 전 선행포착",
     "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55500307",
-    "tip": "서울 성동구 신규 개국 선행 포착! 채용 진행 단계에서 인테리어 현장 접촉 및 일반약/조제약 초도 사입 독점 선점 골든타임."
+    "tip": "서울 성동구 신규 약국 개국 선행 포착! 인허가 전 전 품목 초도 사입 독점 수주 제안 및 상층부 메디컬 처방코드 연계 공급 선점."
   },
   {
     "id": "s_55497273",
@@ -1595,12 +1664,12 @@
     "role": "[12월 중순 개원 예정] 홍대 제너리스의원 코디팀 모집합니다",
     "roadAddr": "서울 마포구 (홍대제너리스의원)",
     "pinQuery": "서울 마포구 홍대제너리스의원",
-    "statusLabel": "개원 준비(선행)",
+    "statusLabel": "12월 개원예정",
     "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55497273",
-    "tip": "서울 마포구 신규 개원 공고! 원내 수액·주사제 직납 단가 견적 제안 및 동 건물/인근 문전약국 처방코드 연계 영업 착수."
+    "tip": "서울 마포구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
-    "id": "s_55391449",
+    "id": "s_55393767",
     "type": "hospital",
     "site": "사람인",
     "siteKey": "saramin",
@@ -1608,12 +1677,12 @@
     "region": "서울 동대문구",
     "keyword": "오픈예정",
     "date": "2026-11-04",
-    "role": "[청량리웰니스] 대형 검진센터 원무 채용 (12월 그랜드 오픈)",
+    "role": "[청량리웰니스] 대형 검진센터 코디 채용 (12월 그랜드 오픈)",
     "roadAddr": "서울 동대문구 (청량리웰니스내과의원)",
     "pinQuery": "서울 동대문구 청량리웰니스내과의원",
-    "statusLabel": "개원 준비(선행)",
-    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55391449",
-    "tip": "서울 동대문구 신규 개원 공고! 원내 수액·주사제 직납 단가 견적 제안 및 동 건물/인근 문전약국 처방코드 연계 영업 착수."
+    "statusLabel": "12월 개원예정",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55393767",
+    "tip": "서울 동대문구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
     "id": "s_55371703",
@@ -1627,9 +1696,9 @@
     "role": "[성수/포셀의원/11월 오픈] 영어/중국어 코디네이터 채용",
     "roadAddr": "서울 성동구 (포셀의원)",
     "pinQuery": "서울 성동구 포셀의원",
-    "statusLabel": "개원 준비(선행)",
+    "statusLabel": "11월 개원예정",
     "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55371703",
-    "tip": "서울 성동구 신규 개원 공고! 원내 수액·주사제 직납 단가 견적 제안 및 동 건물/인근 문전약국 처방코드 연계 영업 착수."
+    "tip": "서울 성동구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
     "id": "s_55212452",
@@ -1643,9 +1712,41 @@
     "role": "[12월 오픈] 리베리의원 홍대점 전 부서 오픈멤버 구인",
     "roadAddr": "서울 마포구 (리베리의원홍대점)",
     "pinQuery": "서울 마포구 리베리의원홍대점",
-    "statusLabel": "개원 준비(선행)",
+    "statusLabel": "12월 개원예정",
     "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55212452",
-    "tip": "서울 마포구 신규 개원 공고! 원내 수액·주사제 직납 단가 견적 제안 및 동 건물/인근 문전약국 처방코드 연계 영업 착수."
+    "tip": "서울 마포구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+  },
+  {
+    "id": "s_55034072",
+    "type": "hospital",
+    "site": "사람인",
+    "siteKey": "saramin",
+    "name": "고양국가대표정형외과의원",
+    "region": "경기 고양시",
+    "keyword": "개원예정",
+    "date": "2026-09-14",
+    "role": "주5일) 신규개원 화정역 팀닥터정형외 물리치료사 구인합니",
+    "roadAddr": "경기 고양시 (고양국가대표정형외과의원)",
+    "pinQuery": "경기 고양시 고양국가대표정형외과의원",
+    "statusLabel": "개원 준비(선행)",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55034072",
+    "tip": "경기 고양시 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+  },
+  {
+    "id": "j_50344322",
+    "type": "hospital",
+    "site": "잡코리아",
+    "siteKey": "jobkorea",
+    "name": "유앤아이의원 파주운정점",
+    "region": "경기 파주시",
+    "keyword": "오픈예정",
+    "date": "2026-11-04",
+    "role": "[유앤아이 파주운정점] 12월 오픈예정 / 피부관리 채용 /주 4일",
+    "roadAddr": "경기 파주시 (유앤아이의원 파주운정점)",
+    "pinQuery": "경기 파주시 유앤아이의원 파주운정점",
+    "statusLabel": "12월 개원예정",
+    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50344322",
+    "tip": "경기 파주시 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
     "id": "j_50260915",
@@ -1657,14 +1758,14 @@
     "keyword": "개원예정",
     "date": "2026-11-04",
     "role": "26년 12월 말 개원예정  금릉역 연세본튼튼의원  (주 5일) 원무 , 접수",
-    "roadAddr": "경기 파주시 일대",
+    "roadAddr": "경기 파주시 (연세본튼튼의원)",
     "pinQuery": "경기 파주시 연세본튼튼의원",
-    "statusLabel": "개원 준비(선행)",
+    "statusLabel": "12월 개원예정",
     "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50260915",
-    "tip": "경기 파주시 신규 의원 선행 포착! 원내 전문약 및 수액제 직납 견적 제안, 인근 약국 처방전 연계."
+    "tip": "경기 파주시 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
-    "id": "j_50113022",
+    "id": "j_50113044",
     "type": "hospital",
     "site": "잡코리아",
     "siteKey": "jobkorea",
@@ -1672,32 +1773,16 @@
     "region": "서울 중구",
     "keyword": "개원예정",
     "date": "2026-11-04",
-    "role": "신규개원 모리스의원 서울시청점 간호조무사 모십니다.",
-    "roadAddr": "서울 중구 일대",
+    "role": "신규개원 모리스의원 서울시청점 상담/코디네이터 모십니다.",
+    "roadAddr": "서울 중구 (모리스의원 서울시청점)",
     "pinQuery": "서울 중구 모리스의원 서울시청점",
     "statusLabel": "개원 준비(선행)",
-    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50113022",
-    "tip": "서울 중구 신규 의원 선행 포착! 원내 전문약 및 수액제 직납 견적 제안, 인근 약국 처방전 연계."
-  },
-  {
-    "id": "j_50274918",
-    "type": "hospital",
-    "site": "잡코리아",
-    "siteKey": "jobkorea",
-    "name": "더미아의원",
-    "region": "서울 중구",
-    "keyword": "오픈예정",
-    "date": "2026-11-04",
-    "role": "[명동 11월오픈] 더미아의원 영어 코디네이터 모십니다",
-    "roadAddr": "서울 중구 일대",
-    "pinQuery": "서울 중구 더미아의원",
-    "statusLabel": "개원 준비(선행)",
-    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50274918",
-    "tip": "서울 중구 신규 의원 선행 포착! 원내 전문약 및 수액제 직납 견적 제안, 인근 약국 처방전 연계."
+    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50113044",
+    "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   }
 ];
 
-            function renderJobs() {
+    function renderJobs() {
       const container = document.getElementById('job-list');
       const search = (document.getElementById('job-search').value || '').toLowerCase().trim();
       
@@ -1721,6 +1806,7 @@
         
         // 4. 채용 사이트 및 구분 필터
         if (currentJobFilter === 'prelicense' && item.status !== 'prelicense') return false;
+        if (currentJobFilter === 'medijob' && item.siteKey !== 'medijob') return false;
         if (currentJobFilter === 'jobkorea' && item.siteKey !== 'jobkorea') return false;
         if (currentJobFilter === 'saramin' && item.siteKey !== 'saramin') return false;
         if (currentJobFilter === 'pharmacy' && item.type !== 'pharmacy') return false;
