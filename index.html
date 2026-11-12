@@ -884,18 +884,26 @@
       <div class="portal-btn-grid">
         <a href="https://recruit.dailypharm.com/" target="_blank" class="portal-btn" style="border-color:#10b981;">
           <span class="portal-btn-name" style="color:#34d399;">💊 팜리쿠르트 ↗</span>
-          <span class="portal-btn-desc">데일리팜 약국 전문 실시간 채용관</span>
+          <span class="portal-btn-desc">데일리팜 약사·약국 1위 실시간 채용관</span>
+        </a>
+        <a href="https://svc.kpanews.co.kr/jobs/main" target="_blank" class="portal-btn" style="border-color:#06b6d4;">
+          <span class="portal-btn-name" style="color:#67e8f9;">🏛️ 약사공론 ↗</span>
+          <span class="portal-btn-desc">대한약사회 공식 약국 채용관</span>
+        </a>
+        <a href="https://recruit.pharmmaker.com/guin_list" target="_blank" class="portal-btn" style="border-color:#8b5cf6;">
+          <span class="portal-btn-name" style="color:#c4b5fd;">👥 약준모 리크루트 ↗</span>
+          <span class="portal-btn-desc">약사 커뮤니티 개국·약국 구인</span>
+        </a>
+        <a href="https://biz.ymyd.co.kr/recruit/list" target="_blank" class="portal-btn" style="border-color:#ec4899;">
+          <span class="portal-btn-name" style="color:#f472b6;">💬 약문약답 ↗</span>
+          <span class="portal-btn-desc">약사 3.7만 인증 플랫폼 채용관</span>
         </a>
         <a href="https://m.medijob.cc/recruit/list" target="_blank" class="portal-btn" style="border-color:#38bdf8;">
           <span class="portal-btn-name">🏢 메디잡 ↗</span>
           <span class="portal-btn-desc">병·의원 전문 실시간 채용관</span>
         </a>
-        <a href="https://www.albamon.com/total-search?keyword=%EC%95%BD%EA%B5%AD" target="_blank" class="portal-btn" style="border-color:#f59e0b;">
-          <span class="portal-btn-name" style="color:#fde68a;">⚡ 알바몬 약국관 ↗</span>
-          <span class="portal-btn-desc">약국 전산원/조제보조 실시간 공고</span>
-        </a>
-        <a href="https://www.saramin.co.kr/zf_user/search?searchword=%EB%B3%91%EC%9B%90%EA%B0%9C%EC%9B%90" target="_blank" class="portal-btn" style="border-color:#ec4899;">
-          <span class="portal-btn-name" style="color:#f472b6;">💼 사람인 개원관 ↗</span>
+        <a href="https://www.saramin.co.kr/zf_user/search?searchword=%EB%B3%91%EC%9B%90%EA%B0%9C%EC%9B%90" target="_blank" class="portal-btn" style="border-color:#f59e0b;">
+          <span class="portal-btn-name" style="color:#fde68a;">💼 사람인 개원관 ↗</span>
           <span class="portal-btn-desc">신규 병의원/약국 개원멤버 채용</span>
         </a>
       </div>
@@ -948,6 +956,7 @@
       <button class="chip active" onclick="setJobFilter('all', this)">전체 공고</button>
       <button class="chip" onclick="setJobFilter('prelicense', this)">🚨 인허가 전 선행포착</button>
       <button class="chip" onclick="setJobFilter('pharmacy', this)">💊 약국 구인 (약사/조제/전산)</button>
+      <button class="chip" onclick="setJobFilter('pharm_special', this)">🌿 약사 전문 플랫폼 (약사공론·팜리쿠르트·약준모·약문약답)</button>
       <button class="chip" onclick="setJobFilter('hospital', this)">🏥 병·의원 구인 (간호/원무)</button>
       <button class="chip" onclick="setJobFilter('medijob', this)">🩺 메디잡 검증공고</button>
       <button class="chip" onclick="setJobFilter('jobkorea', this)">👔 잡코리아 검증공고</button>
@@ -1797,38 +1806,6 @@
 
             const realJobsData = [
   {
-    "id": "medijob_3770702",
-    "type": "hospital",
-    "site": "메디잡",
-    "siteKey": "medijob",
-    "name": "성수리더스정형외과의원",
-    "region": "서울 성동구",
-    "keyword": "오픈예정",
-    "date": "2026-11-04",
-    "role": "★12월 초 오픈 예정) 성수리더스정형외과에서 물리치료사 선생님 구인합니다~!",
-    "roadAddr": "서울 성동구 아차산로 113 삼원타워 3~4층 (성수동2가 300-1)",
-    "pinQuery": "서울 성동구 아차산로 113 삼원타워",
-    "statusLabel": "12월 개원예정",
-    "link": "https://www.medijob.cc/com/cpn/com_cpn_100_view_02?recruitSeqno=3770702",
-    "tip": "성수 IT밸리 직장인 타깃 12월 초 오픈 대형 정형외과! C-arm 콘쥬란/히알루론산 관절강 주사제 및 도수·물리치료 소모품 원내 직납 독점 제안."
-  },
-  {
-    "id": "s_55523259",
-    "type": "hospital",
-    "site": "사람인",
-    "siteKey": "saramin",
-    "name": "더미아의원",
-    "region": "서울 중구",
-    "keyword": "오픈예정",
-    "date": "2026-11-09",
-    "role": "[명동 11월오픈] 더미아의원 몽골 코디네이터 모십니다",
-    "roadAddr": "서울 중구 남대문로 63 한진빌딩 2층 201호 (소공동 21-1)",
-    "pinQuery": "서울 중구 남대문로 63 한진빌딩",
-    "statusLabel": "11월 개원예정",
-    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55523259",
-    "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
-  },
-  {
     "id": "s_55500307",
     "type": "pharmacy",
     "site": "사람인",
@@ -1845,7 +1822,7 @@
     "tip": "서울 성동구 신규 약국 개국 선행 포착! 인허가 전 전 품목 초도 사입 독점 수주 제안 및 상층부 메디컬 처방코드 연계 공급 선점."
   },
   {
-    "id": "s_55497273",
+    "id": "s_55448267",
     "type": "hospital",
     "site": "사람인",
     "siteKey": "saramin",
@@ -1853,15 +1830,15 @@
     "region": "서울 마포구",
     "keyword": "개원예정",
     "date": "2026-11-04",
-    "role": "[12월 중순 개원 예정] 홍대 제너리스의원 코디팀 모집합니다",
+    "role": "[12월 중순 개원 예정] 홍대 제너리스의원 피부관리사 모집합니.",
     "roadAddr": "서울 마포구 양화로 162 동교빌딩 6층 (동교동 165-8)",
     "pinQuery": "서울 마포구 양화로 162 동교빌딩",
     "statusLabel": "12월 개원예정",
-    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55497273",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55448267",
     "tip": "서울 마포구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
-    "id": "s_55393767",
+    "id": "s_55391449",
     "type": "hospital",
     "site": "사람인",
     "siteKey": "saramin",
@@ -1869,11 +1846,11 @@
     "region": "서울 동대문구",
     "keyword": "오픈예정",
     "date": "2026-11-04",
-    "role": "[청량리웰니스] 대형 검진센터 코디 채용 (12월 그랜드 오픈)",
+    "role": "[청량리웰니스] 대형 검진센터 원무 채용 (12월 그랜드 오픈)",
     "roadAddr": "서울 동대문구 고산자로32길 78 판매시설동 3층 305~307호 (용두동 102-1, 청량리역 한양수자인 그라시엘)",
     "pinQuery": "서울 동대문구 고산자로32길 78 한양수자인",
     "statusLabel": "12월 개원예정",
-    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55393767",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55391449",
     "tip": "서울 동대문구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
@@ -1893,20 +1870,20 @@
     "tip": "서울 성동구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
-    "id": "j_50351383",
+    "id": "medijob_3770702",
     "type": "hospital",
-    "site": "잡코리아",
-    "siteKey": "jobkorea",
-    "name": "유앤아이의원 파주운정점",
-    "region": "경기 파주시",
+    "site": "메디잡",
+    "siteKey": "medijob",
+    "name": "성수리더스정형외과의원",
+    "region": "서울 성동구",
     "keyword": "오픈예정",
     "date": "2026-11-04",
-    "role": "[유앤아이 파주운정점] 12월 오픈예정 / 코디네이터 채용 /주 4일",
-    "roadAddr": "경기 파주시 경의로 1070 호수프라자 5층 (와동동 1484-1)",
-    "pinQuery": "경기 파주시 경의로 1070 호수프라자",
+    "role": "★12월 초 오픈 예정) 성수리더스정형외과에서 물리치료사 선생님 구인합니다~!",
+    "roadAddr": "서울 성동구 아차산로 113 삼원타워 3~4층 (성수동2가 300-1)",
+    "pinQuery": "서울 성동구 아차산로 113 삼원타워",
     "statusLabel": "12월 개원예정",
-    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50351383",
-    "tip": "경기 파주시 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+    "link": "https://www.medijob.cc/com/cpn/com_cpn_100_view_02?recruitSeqno=3770702",
+    "tip": "성수 IT밸리 직장인 타깃 12월 초 오픈 대형 정형외과! C-arm 콘쥬란/히알루론산 관절강 주사제 및 도수·물리치료 소모품 원내 직납 독점 제안."
   },
   {
     "id": "j_50260915",
@@ -1925,7 +1902,7 @@
     "tip": "경기 파주시 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   },
   {
-    "id": "j_50113044",
+    "id": "j_50113022",
     "type": "hospital",
     "site": "잡코리아",
     "siteKey": "jobkorea",
@@ -1933,11 +1910,27 @@
     "region": "서울 중구",
     "keyword": "개원예정",
     "date": "2026-11-04",
-    "role": "신규개원 모리스의원 서울시청점 상담/코디네이터 모십니다.",
+    "role": "신규개원 모리스의원 서울시청점 간호조무사 모십니다.",
     "roadAddr": "서울 중구 남대문로9길 40 센터플레이스 3층 (다동 155)",
     "pinQuery": "서울 중구 남대문로9길 40 센터플레이스",
     "statusLabel": "개원 준비(선행)",
-    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50113044",
+    "link": "https://www.jobkorea.co.kr/Recruit/GI_Read/50113022",
+    "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
+  },
+  {
+    "id": "s_55440852",
+    "type": "hospital",
+    "site": "사람인",
+    "siteKey": "saramin",
+    "name": "더미아의원",
+    "region": "서울 중구",
+    "keyword": "오픈예정",
+    "date": "2026-10-30",
+    "role": "[명동 11월오픈] 더미아의원 영어 코디네이터 모십니다",
+    "roadAddr": "서울 중구 남대문로 63 한진빌딩 2층 201호 (소공동 21-1)",
+    "pinQuery": "서울 중구 남대문로 63 한진빌딩",
+    "statusLabel": "11월 개원예정",
+    "link": "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=55440852",
     "tip": "서울 중구 신규 의원급 개원 선행 포착! 인허가 전 원내 의약품/주사제 직납 견적 선제 제안 및 인근 문전약국 처방 연계 타진."
   }
 ];
@@ -1969,6 +1962,7 @@
         if (currentJobFilter === 'medijob' && item.siteKey !== 'medijob') return false;
         if (currentJobFilter === 'jobkorea' && item.siteKey !== 'jobkorea') return false;
         if (currentJobFilter === 'saramin' && item.siteKey !== 'saramin') return false;
+        if (currentJobFilter === 'pharm_special' && !['kpanews', 'pharmrecruit', 'pharmmaker', 'ymyd'].includes(item.siteKey)) return false;
         if (currentJobFilter === 'pharmacy' && item.type !== 'pharmacy') return false;
         if (currentJobFilter === 'hospital' && item.type !== 'hospital') return false;
         
