@@ -482,6 +482,20 @@
       margin-top: 2px;
       padding-left: 18px;
     }
+    /* 동 건물 입점 — 같은 주소에 이미 인허가된 기관 */
+    .same-building-line {
+      font-size: 0.74rem;
+      color: #fde047;
+      font-weight: 600;
+      margin-top: 4px;
+      padding-left: 18px;
+      line-height: 1.45;
+    }
+    .same-building-line .sb-label {
+      color: #94a3b8;
+      font-weight: 700;
+      margin-right: 5px;
+    }
 
     /* 도매영업 특화 정보 상자 */
     .wholesale-box {
@@ -1778,6 +1792,7 @@
             <div class="addr-box">
               <div class="addr-line">📍 ${cleanRoad}</div>
               ${cleanJibun && cleanJibun !== cleanRoad ? `<div class="jibun-line">🏢 지번: ${cleanJibun}</div>` : ''}
+              ${item.sameBuilding ? `<div class="same-building-line"><span class="sb-label">🏢 동 건물 입점</span>${item.sameBuilding}</div>` : ''}
             </div>
 
             <div class="wholesale-box">
