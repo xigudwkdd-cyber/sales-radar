@@ -827,7 +827,7 @@
   <main id="tab-opening" class="tab-content active">
     <!-- 투명 안내 바 -->
     <div class="source-notice-bar">
-      📢 <strong>데이터 출처:</strong> 행정안전부 지방행정인허가 데이터 개방 OpenAPI 실시간 연동 (22개 관할 구역 2,738건 전수 검증 실데이터)
+      📢 <strong>데이터 출처:</strong> 행정안전부 지방행정인허가 데이터 개방 OpenAPI 실시간 연동 (22개 관할 구역 2,740건 전수 검증 실데이터)
     </div>
 
     <!-- ⚡ 실시간 결과 카운터 배너 (스크롤 없이 즉시 숫자 확인) -->
@@ -1051,8 +1051,36 @@
   <script>
     const TODAY = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
 
-    // 1. 신규 개원·개국 실데이터 (행정안전부 공공데이터포털 지방행정인허가 2025~2026 전수 2,738건)
+    // 1. 신규 개원·개국 실데이터 (행정안전부 공공데이터포털 지방행정인허가 2025~2026 전수 2,740건)
     const openingsData = [
+  {
+    "id": "mois_PHMD120263100034084000004",
+    "type": "pharmacy",
+    "name": "미약국",
+    "date": "2026-11-24",
+    "region": "서울 노원구",
+    "roadAddr": "서울특별시 노원구 노해로 490, 길빌딩 101호 (상계동)",
+    "jibunAddr": "",
+    "tel": "",
+    "pinQuery": "서울특별시 노원구 노해로 490",
+    "sameBuilding": "길빌딩 (세라산부인과의원 · 노원마디원신경외과의원 · 공봉택성형외과의원 · 서울하이안치과의원 입점)",
+    "tip": "노원역 메디컬 길빌딩 1층 101호 신규 개국. 동 건물 산부인과·신경외과·성형외과·치과 처방 연계 품목 및 초도 사입(기준마진·결제조건) 선제 제안.",
+    "status": "licensed"
+  },
+  {
+    "id": "mois_PHMA120263030033041100017",
+    "type": "hospital",
+    "name": "포셀라의원",
+    "date": "2026-11-19",
+    "region": "서울 성동구",
+    "roadAddr": "서울특별시 성동구 연무장3길 17, 2층 (성수동2가)",
+    "jibunAddr": "서울특별시 성동구 성수동2가 301-7",
+    "tel": "",
+    "pinQuery": "서울특별시 성동구 연무장3길 17",
+    "sameBuilding": "동 건물 약국 미입점 (인근 26m 안즈약국)",
+    "tip": "성수동 연무장길 2층 신규 의원. 원내 의약품·주사제 직납 견적 및 인근 안즈약국 처방 코드 연계 영업 제안.",
+    "status": "licensed"
+  },
   {
     "id": "mois_PHMD120263940139084000006",
     "type": "pharmacy",
